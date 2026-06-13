@@ -82,10 +82,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "UMKM AI Assistant" },
       { name: "description", content: "Asisten AI untuk membantu UMKM Indonesia mengelola percakapan pelanggan." },
       { property: "og:title", content: "UMKM AI Assistant" },
-      { property: "og:description", content: "Asisten AI untuk UMKM Indonesia." },
+      { property: "og:description", content: "Asisten AI untuk membantu UMKM Indonesia mengelola percakapan pelanggan." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "UMKM AI Assistant" },
+      { name: "twitter:description", content: "Asisten AI untuk membantu UMKM Indonesia mengelola percakapan pelanggan." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e854c7ab-c6e9-462c-9ca4-2f00a7029884/id-preview-97dc2dfc--ad994f7c-4042-405f-9603-d9b87b01fa21.lovable.app-1781341791606.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e854c7ab-c6e9-462c-9ca4-2f00a7029884/id-preview-97dc2dfc--ad994f7c-4042-405f-9603-d9b87b01fa21.lovable.app-1781341791606.png" },
     ],
     links: [
       {
