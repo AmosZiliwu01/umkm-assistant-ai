@@ -27,6 +27,13 @@ export type Database = {
           updated_at: string
           user_id: string
           website: string | null
+          fulfillment_methods: Json
+          payment_methods: Json
+          slug: string | null
+          website_enabled: boolean
+          website_addon_enabled: boolean
+          landing_template: string
+          custom_domain: string | null
         }
         Insert: {
           address?: string | null
@@ -40,6 +47,13 @@ export type Database = {
           updated_at?: string
           user_id: string
           website?: string | null
+          fulfillment_methods?: Json
+          payment_methods?: Json
+          slug?: string | null
+          website_enabled?: boolean
+          website_addon_enabled?: boolean
+          landing_template?: string
+          custom_domain?: string | null
         }
         Update: {
           address?: string | null
@@ -53,6 +67,13 @@ export type Database = {
           updated_at?: string
           user_id?: string
           website?: string | null
+          fulfillment_methods?: Json
+          payment_methods?: Json
+          slug?: string | null
+          website_enabled?: boolean
+          website_addon_enabled?: boolean
+          landing_template?: string
+          custom_domain?: string | null
         }
         Relationships: []
       }
@@ -122,6 +143,7 @@ export type Database = {
           conversation_id: string
           created_at: string
           id: string
+          image_url: string | null
           role: Database["public"]["Enums"]["message_role"]
           user_id: string
         }
@@ -130,6 +152,7 @@ export type Database = {
           conversation_id: string
           created_at?: string
           id?: string
+          image_url?: string | null
           role: Database["public"]["Enums"]["message_role"]
           user_id: string
         }
@@ -138,6 +161,7 @@ export type Database = {
           conversation_id?: string
           created_at?: string
           id?: string
+          image_url?: string | null
           role?: Database["public"]["Enums"]["message_role"]
           user_id?: string
         }
@@ -192,6 +216,75 @@ export type Database = {
           created_at?: string
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_available: boolean
+          name: string
+          price: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_available?: boolean
+          name: string
+          price?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_available?: boolean
+          name?: string
+          price?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      contact_messages: {
+        Row: {
+          contact: string
+          created_at: string
+          id: string
+          is_read: boolean
+          message: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          contact: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          contact?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          name?: string
           user_id?: string
         }
         Relationships: []

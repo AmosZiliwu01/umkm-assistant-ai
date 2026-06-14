@@ -58,12 +58,12 @@ export const sendCustomerMessage = createServerFn({ method: "POST" })
     }
 
     // 5. Load context for AI
-    const [{ data: business }, { data: kb }, { data: history }] =
+    const [{ data: business }, { data: kb }, { data: products }, { data: history }] =
       await Promise.all([
         supabase
           .from("business_settings")
           .select(
-            "business_name, description, address, phone, operating_hours, website",
+            "business_name, description, address, phone, operating_hours, website, social_media, payment_methods, fulfillment_methods",
           )
           .eq("user_id", userId)
           .maybeSingle(),
@@ -72,6 +72,11 @@ export const sendCustomerMessage = createServerFn({ method: "POST" })
           .select("question, answer, category")
           .eq("user_id", userId)
           .limit(100),
+        supabase
+          .from("products")
+          .select("name, description, price, category, is_available")
+          .eq("user_id", userId)
+          .limit(200),
         supabase
           .from("messages")
           .select("role, content")
@@ -89,26 +94,65 @@ export const sendCustomerMessage = createServerFn({ method: "POST" })
         content: m.content,
       }));
 
+    const businessContext = business
+      ? {
+          ...business,
+          social_media: (business.social_media ?? {}) as {
+            instagram?: string | null;
+            facebook?: string | null;
+            tiktok?: string | null;
+          },
+          payment_methods: (business.payment_methods ?? {}) as {
+            qris?: boolean;
+            qris_image_url?: string | null;
+            bank_transfer?: boolean;
+            bank_account?: string | null;
+            cod?: boolean;
+          },
+          fulfillment_methods: (business.fulfillment_methods ?? {}) as {
+            delivery?: boolean;
+            delivery_note?: string | null;
+            pickup?: boolean;
+            pickup_note?: string | null;
+          },
+        }
+      : null;
+
     const aiReply = await generateAiReply({
-      business: business ?? null,
+      business: businessContext,
       knowledge: kb ?? [],
+      products: products ?? [],
       history: turns,
       customerMessage: data.message,
     });
 
-    // 6. Insert AI reply
+    // 6. Insert AI reply (text)
     await supabase.from("messages").insert({
       conversation_id: conversationId,
       user_id: userId,
       role: "assistant",
-      content: aiReply,
+      content: aiReply.text,
     });
+
+    const qrisImageUrl = businessContext?.payment_methods?.qris_image_url;
+    let qrisImageSent = false;
+    if (aiReply.sendQrisImage && qrisImageUrl) {
+      await supabase.from("messages").insert({
+        conversation_id: conversationId,
+        user_id: userId,
+        role: "assistant",
+        content: "",
+        image_url: qrisImageUrl,
+      });
+      qrisImageSent = true;
+    }
+
     await supabase
       .from("conversations")
       .update({ last_message_at: new Date().toISOString() })
       .eq("id", conversationId);
 
-    return { conversationId, aiReply };
+    return { conversationId, aiReply: aiReply.text, qrisImageSent, qrisImageUrl: qrisImageSent ? qrisImageUrl : null };
   });
 
 const StatusInput = z.object({

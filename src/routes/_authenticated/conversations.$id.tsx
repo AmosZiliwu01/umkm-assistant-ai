@@ -37,7 +37,7 @@ function ConversationDetail() {
   const msgs = useQuery({
     queryKey: ["messages", id],
     queryFn: async () => {
-      const { data, error } = await supabase.from("messages").select("id, role, content, created_at")
+      const { data, error } = await supabase.from("messages").select("id, role, content, image_url, created_at")
         .eq("conversation_id", id).order("created_at", { ascending: true });
       if (error) throw error;
       return data as ChatMsg[];

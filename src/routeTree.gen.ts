@@ -10,10 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedSimulatorRouteImport } from './routes/_authenticated/simulator'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedProductsRouteImport } from './routes/_authenticated/products'
 import { Route as AuthenticatedKnowledgeRouteImport } from './routes/_authenticated/knowledge'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedConversationsRouteImport } from './routes/_authenticated/conversations'
@@ -22,6 +24,11 @@ import { Route as AuthenticatedConversationsIdRouteImport } from './routes/_auth
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SlugRoute = SlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -41,6 +48,11 @@ const AuthenticatedSimulatorRoute = AuthenticatedSimulatorRouteImport.update({
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProductsRoute = AuthenticatedProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedKnowledgeRoute = AuthenticatedKnowledgeRouteImport.update({
@@ -68,20 +80,24 @@ const AuthenticatedConversationsIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$slug': typeof SlugRoute
   '/auth': typeof AuthRoute
   '/conversations': typeof AuthenticatedConversationsRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/knowledge': typeof AuthenticatedKnowledgeRoute
+  '/products': typeof AuthenticatedProductsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/simulator': typeof AuthenticatedSimulatorRoute
   '/conversations/$id': typeof AuthenticatedConversationsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$slug': typeof SlugRoute
   '/auth': typeof AuthRoute
   '/conversations': typeof AuthenticatedConversationsRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/knowledge': typeof AuthenticatedKnowledgeRoute
+  '/products': typeof AuthenticatedProductsRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/simulator': typeof AuthenticatedSimulatorRoute
   '/conversations/$id': typeof AuthenticatedConversationsIdRoute
@@ -90,10 +106,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/$slug': typeof SlugRoute
   '/auth': typeof AuthRoute
   '/_authenticated/conversations': typeof AuthenticatedConversationsRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/knowledge': typeof AuthenticatedKnowledgeRoute
+  '/_authenticated/products': typeof AuthenticatedProductsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/simulator': typeof AuthenticatedSimulatorRoute
   '/_authenticated/conversations/$id': typeof AuthenticatedConversationsIdRoute
@@ -102,20 +120,24 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$slug'
     | '/auth'
     | '/conversations'
     | '/dashboard'
     | '/knowledge'
+    | '/products'
     | '/settings'
     | '/simulator'
     | '/conversations/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$slug'
     | '/auth'
     | '/conversations'
     | '/dashboard'
     | '/knowledge'
+    | '/products'
     | '/settings'
     | '/simulator'
     | '/conversations/$id'
@@ -123,10 +145,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/$slug'
     | '/auth'
     | '/_authenticated/conversations'
     | '/_authenticated/dashboard'
     | '/_authenticated/knowledge'
+    | '/_authenticated/products'
     | '/_authenticated/settings'
     | '/_authenticated/simulator'
     | '/_authenticated/conversations/$id'
@@ -135,6 +159,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  SlugRoute: typeof SlugRoute
   AuthRoute: typeof AuthRoute
 }
 
@@ -145,6 +170,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$slug': {
+      id: '/$slug'
+      path: '/$slug'
+      fullPath: '/$slug'
+      preLoaderRoute: typeof SlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -173,6 +205,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/products': {
+      id: '/_authenticated/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof AuthenticatedProductsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/knowledge': {
@@ -224,6 +263,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedConversationsRoute: typeof AuthenticatedConversationsRouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedKnowledgeRoute: typeof AuthenticatedKnowledgeRoute
+  AuthenticatedProductsRoute: typeof AuthenticatedProductsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedSimulatorRoute: typeof AuthenticatedSimulatorRoute
 }
@@ -232,6 +272,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedConversationsRoute: AuthenticatedConversationsRouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedKnowledgeRoute: AuthenticatedKnowledgeRoute,
+  AuthenticatedProductsRoute: AuthenticatedProductsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedSimulatorRoute: AuthenticatedSimulatorRoute,
 }
@@ -242,8 +283,19 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  SlugRoute: SlugRoute,
   AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

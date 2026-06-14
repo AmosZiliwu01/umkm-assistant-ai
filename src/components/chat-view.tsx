@@ -5,7 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-export interface ChatMsg { id: string; role: "customer" | "assistant" | "admin"; content: string; created_at?: string; }
+export interface ChatMsg {
+  id: string;
+  role: "customer" | "assistant" | "admin";
+  content: string;
+  image_url?: string | null;
+  created_at?: string;
+}
 
 export function ChatView({
   messages, onSend, disabled, sending, placeholder, headerRight,
@@ -36,21 +42,35 @@ export function ChatView({
         {messages.length === 0 && (
           <p className="py-12 text-center text-sm text-muted-foreground">Mulai percakapan dengan mengetik pesan di bawah.</p>
         )}
-        {messages.map((m) => (
-          <div key={m.id} className={cn("flex", m.role === "customer" ? "justify-end" : "justify-start")}>
-            <div className={cn(
-              "max-w-[80%] rounded-2xl px-3 py-2 text-sm",
-              m.role === "customer" && "bg-primary text-primary-foreground",
-              m.role === "assistant" && "bg-muted text-foreground",
-              m.role === "admin" && "bg-[var(--accent)] text-[var(--accent-foreground)]",
-            )}>
-              {m.role === "admin" && <div className="mb-0.5 text-[10px] font-medium uppercase opacity-70">Admin</div>}
-              <div className="prose prose-sm max-w-none [&_p]:m-0">
-                <ReactMarkdown>{m.content}</ReactMarkdown>
+        {messages.map((m) => {
+          const hasText = m.content.trim().length > 0;
+          const hasImage = !!m.image_url;
+          return (
+            <div key={m.id} className={cn("flex", m.role === "customer" ? "justify-end" : "justify-start")}>
+              <div className={cn(
+                "max-w-[80%] rounded-2xl px-3 py-2 text-sm",
+                m.role === "customer" && "bg-primary text-primary-foreground",
+                m.role === "assistant" && "bg-muted text-foreground",
+                m.role === "admin" && "bg-[var(--accent)] text-[var(--accent-foreground)]",
+                hasImage && !hasText && "p-2",
+              )}>
+                {m.role === "admin" && <div className="mb-0.5 text-[10px] font-medium uppercase opacity-70">Admin</div>}
+                {hasImage && (
+                  <img
+                    src={m.image_url ?? undefined}
+                    alt="Lampiran"
+                    className={cn("max-w-[220px] rounded-lg object-contain", hasText && "mb-1.5")}
+                  />
+                )}
+                {hasText && (
+                  <div className="prose prose-sm max-w-none [&_p]:m-0">
+                    <ReactMarkdown>{m.content}</ReactMarkdown>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
         {sending && <div className="text-xs text-muted-foreground">AI sedang mengetik…</div>}
       </div>
       <form onSubmit={submit} className="flex items-end gap-2 border-t p-3">
