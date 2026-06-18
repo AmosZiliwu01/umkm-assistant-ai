@@ -5,7 +5,7 @@ import { Sparkles, MessagesSquare, BookOpen, Store } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "UMKM AI Assistant — Asisten AI untuk UMKM Indonesia" },
+      { title: "UMKM AI Assistant | Asisten AI untuk UMKM Indonesia" },
       { name: "description", content: "Kelola percakapan pelanggan dengan AI yang memahami bisnis Anda. Knowledge base, simulator chat, dan handover ke admin." },
       { property: "og:title", content: "UMKM AI Assistant" },
       { property: "og:description", content: "AI customer service untuk UMKM Indonesia." },

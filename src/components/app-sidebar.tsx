@@ -8,6 +8,7 @@ import {
   LogOut,
   Store,
   Package,
+  Images,
 } from "lucide-react";
 import {
   Sidebar,
@@ -28,6 +29,7 @@ import { useAuth } from "@/hooks/use-auth";
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Produk", url: "/products", icon: Package },
+  { title: "Galeri", url: "/gallery", icon: Images },
   { title: "Knowledge Base", url: "/knowledge", icon: BookOpen },
   { title: "Chat Simulator", url: "/simulator", icon: Sparkles },
   { title: "Percakapan", url: "/conversations", icon: MessagesSquare },

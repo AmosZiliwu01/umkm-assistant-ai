@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { sendCustomerMessage } from "@/lib/chat.functions";
 
 export const Route = createFileRoute("/_authenticated/simulator")({
-  head: () => ({ meta: [{ title: "Chat Simulator — UMKM AI" }] }),
+  head: () => ({ meta: [{ title: "Chat Simulator | UMKM AI" }] }),
   component: Simulator,
 });
 

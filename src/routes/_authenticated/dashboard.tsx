@@ -11,7 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — UMKM AI" }] }),
+  head: () => ({ meta: [{ title: "Dashboard | UMKM AI" }] }),
   component: Dashboard,
 });
 

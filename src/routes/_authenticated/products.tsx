@@ -24,7 +24,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/_authenticated/products")({
-  head: () => ({ meta: [{ title: "Produk — UMKM AI" }] }),
+  head: () => ({ meta: [{ title: "Produk | UMKM AI" }] }),
   component: ProductsPage,
 });
 

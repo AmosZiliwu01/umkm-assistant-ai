@@ -25,7 +25,7 @@ function LandingPage() {
 
   useEffect(() => {
     if (landing.business.business_name) {
-      document.title = `${landing.business.business_name} — UMKM AI`;
+      document.title = `${landing.business.business_name} | UMKM AI`;
     }
   }, [landing.business.business_name]);
 

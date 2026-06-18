@@ -22,7 +22,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/_authenticated/knowledge")({
-  head: () => ({ meta: [{ title: "Knowledge Base — UMKM AI" }] }),
+  head: () => ({ meta: [{ title: "Knowledge Base | UMKM AI" }] }),
   component: KnowledgePage,
 });
 

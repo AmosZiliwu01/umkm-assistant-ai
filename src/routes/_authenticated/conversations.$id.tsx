@@ -12,7 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { sendCustomerMessage, sendAdminReply, updateConversationStatus } from "@/lib/chat.functions";
 
 export const Route = createFileRoute("/_authenticated/conversations/$id")({
-  head: () => ({ meta: [{ title: "Percakapan — UMKM AI" }] }),
+  head: () => ({ meta: [{ title: "Percakapan | UMKM AI" }] }),
   component: ConversationDetail,
 });
 

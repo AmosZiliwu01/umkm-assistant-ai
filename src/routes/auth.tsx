@@ -14,7 +14,7 @@ import { Store } from "lucide-react";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Masuk — UMKM AI Assistant" },
+      { title: "Masuk | UMKM AI Assistant" },
       { name: "description", content: "Masuk atau daftar untuk mulai menggunakan asisten AI UMKM." },
     ],
   }),

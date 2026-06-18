@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/_authenticated/conversations")({
-  head: () => ({ meta: [{ title: "Percakapan — UMKM AI" }] }),
+  head: () => ({ meta: [{ title: "Percakapan | UMKM AI" }] }),
   component: ConversationsLayout,
 });
 

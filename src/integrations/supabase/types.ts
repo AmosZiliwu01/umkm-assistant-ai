@@ -22,6 +22,7 @@ export type Database = {
           description: string | null
           id: string
           operating_hours: string | null
+          operating_hours_structured: Json
           phone: string | null
           social_media: Json
           updated_at: string
@@ -34,6 +35,13 @@ export type Database = {
           website_addon_enabled: boolean
           landing_template: string
           custom_domain: string | null
+          cover_image_url: string | null
+          logo_url: string | null
+          latitude: number | null
+          longitude: number | null
+          location_label: string | null
+          theme_color: string
+          promo_text: string | null
         }
         Insert: {
           address?: string | null
@@ -42,6 +50,7 @@ export type Database = {
           description?: string | null
           id?: string
           operating_hours?: string | null
+          operating_hours_structured?: Json
           phone?: string | null
           social_media?: Json
           updated_at?: string
@@ -54,6 +63,13 @@ export type Database = {
           website_addon_enabled?: boolean
           landing_template?: string
           custom_domain?: string | null
+          cover_image_url?: string | null
+          logo_url?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          location_label?: string | null
+          theme_color?: string
+          promo_text?: string | null
         }
         Update: {
           address?: string | null
@@ -62,6 +78,7 @@ export type Database = {
           description?: string | null
           id?: string
           operating_hours?: string | null
+          operating_hours_structured?: Json
           phone?: string | null
           social_media?: Json
           updated_at?: string
@@ -74,6 +91,13 @@ export type Database = {
           website_addon_enabled?: boolean
           landing_template?: string
           custom_domain?: string | null
+          cover_image_url?: string | null
+          logo_url?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          location_label?: string | null
+          theme_color?: string
+          promo_text?: string | null
         }
         Relationships: []
       }
@@ -289,19 +313,54 @@ export type Database = {
         }
         Relationships: []
       }
+      gallery_images: {
+        Row: {
+          id: string
+          user_id: string
+          image_url: string
+          caption: string | null
+          sort_order: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          image_url: string
+          caption?: string | null
+          sort_order?: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          image_url?: string
+          caption?: string | null
+          sort_order?: number
+          created_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
-    Functions: {
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
+        Functions: {
+          has_role: {
+            Args: {
+              _role: Database["public"]["Enums"]["app_role"]
+              _user_id: string
+            }
+            Returns: boolean
+          }
+          is_slug_available: {
+            Args: {
+              check_slug: string
+              exclude_user_id?: string
+            }
+            Returns: boolean
+          }
         }
-        Returns: boolean
-      }
-    }
+
     Enums: {
       app_role: "admin" | "user"
       conversation_status: "ai_active" | "admin_handling" | "closed"
